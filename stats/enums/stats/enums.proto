@@ -15,26 +15,11 @@
  */
 
 syntax = "proto2";
-package android.server;
 
-option java_outer_classname = "ServerProtoEnums";
-option java_multiple_files = true;
+package android.stats;
+option java_outer_classname = "StatsEnums";
 
-enum DeviceIdleModeEnum {
-    // Device idle mode - not active.
-    DEVICE_IDLE_MODE_OFF = 0;
-    // Device idle mode - active in lightweight mode.
-    DEVICE_IDLE_MODE_LIGHT = 1;
-    // Device idle mode - active in full mode.
-    DEVICE_IDLE_MODE_DEEP = 2;
-}
-
-enum ErrorSource {
-    ERROR_SOURCE_UNKNOWN = 0;
-    // Data app
-    DATA_APP = 1;
-    // System app
-    SYSTEM_APP = 2;
-    // System server.
-    SYSTEM_SERVER = 3;
+enum EventType {
+  // Unknown.
+  TYPE_UNKNOWN = 0;
 }
