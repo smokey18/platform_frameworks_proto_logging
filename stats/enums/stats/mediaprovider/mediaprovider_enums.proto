@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 The Android Open Source Project
+ * Copyright (C) 2019 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,16 @@
  */
 
 syntax = "proto2";
+package android.stats.mediaprovider;
+option java_multiple_files = true;
 
-package android.stats;
-option java_outer_classname = "StatsEnums";
-
-enum EventType {
-  // Unknown.
-  TYPE_UNKNOWN = 0;
-  CONTENT_SUGGESTIONS_CLASSIFY_CONTENT_CALL_SUCCEEDED = 1;
-  CONTENT_SUGGESTIONS_CLASSIFY_CONTENT_CALL_FAILED = 2;
-  CONTENT_SUGGESTIONS_SUGGEST_CONTENT_CALL_SUCCEEDED = 3;
-  CONTENT_SUGGESTIONS_SUGGEST_CONTENT_CALL_FAILED = 4;
+enum VolumeType {
+    // Volume is unknown
+    UNKNOWN = 0;
+    // Volume is MediaStore.VOLUME_INTERNAL
+    INTERNAL = 1;
+    // Volume is MediaStore.VOLUME_EXTERNAL_PRIMARY
+    EXTERNAL_PRIMARY = 2;
+    // Volume is non-primary external storage
+    EXTERNAL_OTHER = 3;
 }
