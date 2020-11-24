@@ -520,7 +520,7 @@ message Atom {
     }
 
     // Pulled events will start at field 10000.
-    // Next: 10092
+    // Next: 10095
     oneof pulled {
         WifiBytesTransfer wifi_bytes_transfer = 10000 [(module) = "framework"];
         WifiBytesTransferByFgBg wifi_bytes_transfer_by_fg_bg = 10001 [(module) = "framework"];
@@ -626,6 +626,8 @@ message Atom {
         CellularServiceState cellular_service_state = 10090 [(module) = "telephony"];
         CellularDataServiceSwitch cellular_data_service_switch = 10091 [(module) = "telephony"];
         SystemMemory system_memory = 10092 [(module) = "framework"];
+        ImsRegistrationTermination ims_registration_termination = 10093 [(module) = "telephony"];
+        ImsRegistrationStats ims_registration_stats = 10094 [(module) = "telephony"];
     }
 
     // DO NOT USE field numbers above 100,000 in AOSP.
@@ -10747,7 +10749,7 @@ message VoiceCallRatUsage {
     // Radio access technology.
     optional android.telephony.NetworkTypeEnum rat = 2;
 
-    // Total duration that voice calls spent on this carrier and RAT, rounded to 5 minute.
+    // Total duration that voice calls spent on this carrier and RAT, rounded to 5 minutes.
     optional int64 total_duration_seconds = 3;
 
     // Total number of calls using this carrier and RAT.
@@ -11155,6 +11157,83 @@ message DataStallRecoveryReported {
 
     // Whether the device is in multi-SIM mode
     optional bool is_multi_sim = 6;
+}
+
+/**
+ * Pulls IMS registration terminations.
+ *
+ * Each pull generates multiple atoms, one for each termination condition happened during the day.
+ *
+ * Pulled from:
+ *   frameworks/opt/telephony/src/java/com/android/internal/telephony/metrics/MetricsCollector.java
+ */
+message ImsRegistrationTermination {
+    // Carrier ID of the SIM used for IMS registration.
+    // See https://source.android.com/devices/tech/config/carrierid.
+    optional int32 carrier_id = 1;
+
+    // Whether the device is in multi-SIM mode when the registration terminated.
+    optional bool is_multi_sim = 2;
+
+    // Radio access technology (RAT) used by the registration when it terminated.
+    // This can be IWLAN if IMS was registered over Wifi.
+    optional android.telephony.NetworkTypeEnum rat_at_end = 3;
+
+    // Whether the IMS registration failed before it was established.
+    optional bool setup_failed = 4;
+
+    // IMS reason code indicating the termination reason.
+    // See: frameworks/base/telephony/java/android/telephony/ims/ImsReasonInfo.java
+    optional int32 reason_code = 5;
+
+    // IMS extra code indicating the termination reason.
+    optional int32 extra_code = 6;
+
+    // IMS extra message indicating the termination reason.
+    // This string is truncated to 128 characters if its length exceeds the limit.
+    optional string extra_message = 7;
+
+    // Total number of instances of registration termination that matches the above conditions.
+    optional int32 count = 8;
+}
+
+/**
+ * Pulls IMS registration statistics.
+ *
+ * Each pull generates multiple atoms, one for each carrier, SIM slot, and radio access technology
+ * (RAT) combination. Durations are aggregated from all registrations with matching criteria,
+ * including ones that are currently active.
+ *
+ * Pulled from:
+ *   frameworks/opt/telephony/src/java/com/android/internal/telephony/metrics/MetricsCollector.java
+ */
+message ImsRegistrationStats {
+    // Carrier ID of the SIM used for IMS registration.
+    // See https://source.android.com/devices/tech/config/carrierid.
+    optional int32 carrier_id = 1;
+
+    // Index of the SIM used, 0 for single-SIM devices.
+    optional int32 sim_slot_index = 2;
+
+    // Radio access technology (RAT) used by the registration.
+    // This can be IWLAN if IMS was registered over Wifi.
+    optional android.telephony.NetworkTypeEnum rat = 3;
+
+    // Total time IMS was registered (connected time), rounded to 5 minutes.
+    optional int32 registered_seconds = 4;
+
+    // Durations that each feature (Voice, Video, UT, SMS) is capable (supported/enabled by the
+    // network/device) and available (registered and ready to use).
+    // All durations are rounded to 5 minutes and should be equal to or shorter than
+    // registered_seconds.
+    optional int32 voice_capable_seconds = 5;
+    optional int32 voice_available_seconds = 6;
+    optional int32 sms_capable_seconds = 7;
+    optional int32 sms_available_seconds = 8;
+    optional int32 video_capable_seconds = 9;
+    optional int32 video_available_seconds = 10;
+    optional int32 ut_capable_seconds = 11;
+    optional int32 ut_available_seconds = 12;
 }
 
 /**
