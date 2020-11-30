@@ -12172,7 +12172,8 @@ message HdmiCecMessageReported {
  */
 message AutoRotateReported {
     enum Orientation {
-        UNKNOWN = 1;
+        UNKNOWN = 0;
+        DEPRECATED = 1;
         ROTATION_0 = 2;
         ROTATION_90 = 3;
         ROTATION_180 = 4;
