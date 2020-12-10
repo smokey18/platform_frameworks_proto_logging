@@ -5620,8 +5620,10 @@ message CpuTimePerUid {
 
 /**
  * Pulls Cpu Time Per Uid per frequency.
- * Note that isolated process uid time should be attributed to host uids.
- * For each uid, we order the time by descending frequencies.
+ * Note that uids are transformed to reduce the number of uploaded entries. Shared GIDs are
+ * combined under single uid LAST_SHARED_APPLICATION_GID. Individual isolated uids are excluded
+ * because they are recycled and removed from the underlying data source. Uids for apps are
+ * normalized to their app id.
  */
 message CpuTimePerUidFreq {
     optional int32 uid = 1 [(is_uid) = true];
