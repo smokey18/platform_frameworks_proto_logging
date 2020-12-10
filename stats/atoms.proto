@@ -10471,6 +10471,14 @@ message TifTuneStateChanged {
     //              BinderService.createSession
     //              SessionState.sessionId
     optional string tif_session_id = 3 [(state_field_option).primary_field = true];
+    optional android.stats.tv.TifInputType type = 4;
+    // The id of this TV Input, only unique to a given TV Input Service.
+    // This is specifically NOT android.media.tv.TvInputInfo.getId()
+    // which is a string that contains the package name of its TvInputService.
+    optional int32 inputId = 5  [(state_field_option).primary_field = true];
+    // The HDMI port id
+    // Only valid when type == HDMI
+    optional int32 hdmiPort = 6  [(state_field_option).primary_field = true];
 }
 
 /**
