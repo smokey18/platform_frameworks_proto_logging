@@ -533,7 +533,6 @@ message Atom {
         BluetoothBytesTransfer bluetooth_bytes_transfer = 10006 [(module) = "framework"];
         KernelWakelock kernel_wakelock = 10004 [(module) = "framework"];
         SubsystemSleepState subsystem_sleep_state = 10005 [(module) = "statsdtest"];
-        CpuTimePerFreq cpu_time_per_freq = 10008 [(module) = "framework"];
         CpuTimePerUid cpu_time_per_uid = 10009 [(module) = "framework", (module) = "statsdtest"];
         CpuTimePerUidFreq cpu_time_per_uid_freq =
                 10010 [(module) = "framework", (module) = "statsd"];
@@ -638,7 +637,7 @@ message Atom {
     // Field numbers 100,000 - 199,999 are reserved for non-AOSP (e.g. OEMs) to use.
     // Field numbers 200,000 and above are reserved for future use; do not use them at all.
 
-    reserved 10036;
+    reserved 10008, 10036;
 }
 
 /**
@@ -5630,19 +5629,6 @@ message OnDevicePowerMeasurement {
 
     // Accumulated energy used via the rail since device boot in uWs.
     optional uint64 energy_microwatt_secs = 4;
-}
-
-/**
- * Pulls Cpu time per frequency.
- * Pulls the time the cpu spend on the frequency index. Frequency index
- * starts from highest to lowest. The value should be monotonically
- * increasing since boot. However, if there is a cpu
- * hotplug event, the value would be reset as well.
- */
-message CpuTimePerFreq {
-    optional uint32 cluster = 1;
-    optional uint32 freq_index = 2;
-    optional uint64 time_millis = 3;
 }
 
 /**
