@@ -548,6 +548,8 @@ message Atom {
         AuthManagerCanAuthenticateInvoked auth_manager_can_authenticate_invoked = 354 [(module) = "framework"];
         AuthEnrollActionInvoked auth_enroll_action_invoked = 355 [(module) = "framework"];
         AuthDeprecatedAPIUsed auth_deprecated_api_used = 356 [(module) = "framework"];
+        UnattendedRebootOccurred unattended_reboot_occurred = 357 [(module) = "scheduling"];
+        LongRebootBlockingReported long_reboot_blocking_reported = 358 [(module) = "scheduling"];
         // StatsdStats tracks platform atoms with ids upto 500.
         // Update StatsdStats::kMaxPushedAtomId when atom ids here approach that value.
     }
@@ -14080,6 +14082,64 @@ message MediaTranscodingSessionEnded {
 
     // Whether destination video is HDR.
     optional bool dst_is_hdr = 16;
+}
+
+/** Logs information about an unattended reboot that took place. This is logged
+ *  after the next boot, when the device is first unlocked.
+ *
+ * Logged from:
+ *   packages/modules/Scheduling/service/java/com/android/server/RebootReadinessLogger.java
+ */
+message UnattendedRebootOccurred {
+
+    // Time between the reboot readiness state checks starting, and the device
+    // becoming reboot-ready.
+    optional int64 time_until_reboot_ready_millis= 1;
+
+    // Time taken for the device to be unlocked (i.e. for the keyguard to be
+    // gone) after an unattended reboot took place.
+    optional int64 time_until_first_unlock_millis = 2;
+
+    // Number of times the reboot was blocked by the device being interactive.
+    optional int32 times_blocked_by_interactivity = 3;
+
+    // Number of times the reboot was blocked by a callback registered by a
+    // subsystem or a privileged app.
+    optional int32 times_blocked_by_subsystems = 4;
+
+    // Number of times the reboot was blocked by background app activity.
+    optional int32 times_blocked_by_app_activity = 5;
+}
+
+
+/**
+ * Logs information about an app uid or registered system component that has
+ * been blocking the device from being reboot-ready for a long time.
+ *
+ * Logged from:
+ *   packages/modules/Scheduling/service/java/com/android/server/RebootReadinessLogger.java
+ */
+message LongRebootBlockingReported {
+
+    enum RebootBlockReason {
+        SYSTEM_COMPONENT = 1;
+        APP_UID = 2;
+    }
+
+    // The reason why the reboot has been blocked. This is either a system
+    // component that has registered a callback, or an app UID running in the
+    // background.
+    optional RebootBlockReason reboot_block_reason = 1;
+
+    // Only one of the following two fields should be set, depending on the
+    // RebootBlockReason.
+
+    // The name supplied by a system component when it registered a callback
+    // to block the reboot.
+    optional string component_name = 2;
+
+    // The uid of an app that is running in the background.
+    optional int32 uid = 3;
 }
 
 /**
