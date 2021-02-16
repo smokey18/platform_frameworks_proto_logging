@@ -523,6 +523,7 @@ message Atom {
         SimSpecificSettingsRestored sim_specific_settings_restored = 334
             [(module) = "telephony"];
         PinStorageEvent pin_storage_event = 336 [(module) = "telephony"];
+        FaceDownReported face_down_reported = 337 [(module) = "framework"];
         BluetoothHALCrashReasonReported bluetooth_hal_crash_reason_reported =
             338 [(module) = "bluetooth"];
 
@@ -11684,6 +11685,40 @@ message PinStorageEvent {
 
     // Number of PINs stored or discarded.
     optional int32 number_of_pins = 2;
+}
+
+/**
+ * Logs flip to screen off events.
+ *
+ * Logged from:
+ *   frameworks/opt/telephony/src/java/com/android/server/power/FaceDownDetector.java
+ */
+message FaceDownReported {
+    enum Response{
+        UNKNOWN = 1;
+        // The phone was flipped before the screen turns off.
+        UNFLIP = 2;
+        // User interacts with the screen after a face down is detected.
+        USER_INTERACTION = 3;
+        // A flip leads to screen turning off. This is the expected outcome.
+        SCREEN_OFF = 4;
+    }
+
+    // Logs the action that occurs from a flip event, whether by user or system
+    // action.
+    optional Response face_down_response = 1;
+
+    // After a flip is detected, how long until a system or user action occurs.
+    optional int64 millis_since_flip = 2;
+
+    // Difference between the flip time and when the timeout would otherwise
+    // occur.
+    optional int64 millis_until_normal_timeout = 3;
+
+    // How quickly the user turns the screen back on after a flip event.
+    // A low value may indicate a false negative. Logged only when Response is
+    // SCREEN_OFF.
+    optional int64 millis_until_next_screen_on = 4;
 }
 
 /**
