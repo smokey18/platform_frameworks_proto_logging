@@ -804,6 +804,9 @@ enum Action {
     // CATEGORY: SETTINGS
     // OS: S
     ACTION_CAMERA_ROTATE_TOGGLE = 1751;
+
+    // ACTION: Allow or deny an app to set alarms and reminders
+    ACTION_ALARMS_AND_REMINDERS_TOGGLE = 1752;
 }
 
 /**
@@ -2861,4 +2864,9 @@ enum PageId {
     // CATEGORY: SETTINGS
     // OS: S
     LOCATION_SERVICES = 1868;
+
+    // OPEN: Settings > Apps > Gear > Special Access > Alarms and Reminders
+    // CATEGORY: SETTINGS
+    // OS: S
+    ALARMS_AND_REMINDERS = 1869;
 }
