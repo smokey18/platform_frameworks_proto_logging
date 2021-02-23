@@ -540,6 +540,7 @@ message Atom {
             346 [(module) = "framework"];
         AppSearchCallStatsReported app_search_call_stats_reported = 347 [(module) = "framework"];
         AppSearchPutDocumentStatsReported app_search_put_document_stats_reported = 348 [(module) = "framework"];
+        DeviceControlChanged device_control_changed = 349 [(module) = "sysui"];
 
         // StatsdStats tracks platform atoms with ids upto 500.
         // Update StatsdStats::kMaxPushedAtomId when atom ids here approach that value.
@@ -13901,4 +13902,23 @@ message MagnificationModeWithImeOnReported {
     // The definition of the magnification mode.
     // From frameworks/base/core/proto/android/stats/accessibility/accessibility_enums.proto.
     optional android.stats.accessibility.MagnificationMode activated_mode = 1;
+}
+
+/*
+ * Reports a device controls user interaction
+ *
+ * Logged from:
+ *   frameworks/base/packages/SystemUI/src/com/android/systemui/controls/ControlsMetricsLoggerImpl.kt
+ */
+message DeviceControlChanged {
+    // The event_id
+    optional int32 event_id = 1;
+    // An identifier to tie together multiple logs relating to the same controls session
+    optional int32 instance_id = 2;
+    // The type of device the user has interacted with (android.service.controls.DeviceTypes)
+    optional int32 device_type = 3;
+    // The service app uid.
+    optional int32 uid = 4 [(is_uid) = true];
+    // Is the device locked while the action started
+    optional bool is_locked = 5;
 }
