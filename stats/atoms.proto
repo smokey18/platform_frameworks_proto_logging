@@ -752,6 +752,14 @@ message TranscodingData {
         APP_EXTRA = 5;   // ApplicationMediaCapabilities API in open()
     }
 
+    // Causes that leads to the failure of transcode.
+    enum FailureCause {
+        CAUSE_UNKNOWN = 0;
+        TRANSCODING_SERVICE_ERROR = 1;     // Error from transcoding service.
+        TRANSCODING_CLIENT_TIMEOUT = 2;    // Timeout from MediaProvider.
+        TRANSCODING_SESSOION_CANCELED = 3; // MediaProvider cancels the transcode.
+    }
+
     enum AccessType {
         HEVC_WRITE = 1;
         READ_DIRECT = 2;
@@ -775,6 +783,10 @@ message TranscodingData {
     optional int64 file_duration_millis = 6; // The duration of the video file.
     optional int64 file_framerate_fps = 7; // The framerate of the video file.
     optional AccessReason access_reason = 8;
+    optional int64 width = 9;
+    optional int64 height = 10;
+    optional bool hit_anr = 11;
+    optional FailureCause failure_cause = 12;   // This field is valid only when fails.
 }
 
 /**
