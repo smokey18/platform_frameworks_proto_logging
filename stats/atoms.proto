@@ -5784,6 +5784,9 @@ message CpuCyclesPerThreadGroupCluster {
 
         // All system server threads.
         SYSTEM_SERVER = 2;
+
+        // All surface flinger threads.
+        SURFACE_FLINGER = 3;
     }
     optional ThreadGroup thread_group = 1;
 
