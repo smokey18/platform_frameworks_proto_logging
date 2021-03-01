@@ -538,6 +538,8 @@ message Atom {
             345 [(module) = "framework"];
         MagnificationModeWithImeOnReported magnification_mode_with_ime_on_reported =
             346 [(module) = "framework"];
+        AppSearchCallStatsReported app_search_call_stats_reported = 347 [(module) = "framework"];
+        AppSearchPutDocumentStatsReported app_search_put_document_stats_reported = 348 [(module) = "framework"];
 
         // StatsdStats tracks platform atoms with ids upto 500.
         // Update StatsdStats::kMaxPushedAtomId when atom ids here approach that value.
@@ -10098,6 +10100,104 @@ message RebootEscrowRebootReported {
 
   // The count of LSKF captured since preparation
   optional int32 lskf_captured_counts = 8;
+}
+
+/**
+ * Logs stats for AppSearch function calls
+ */
+message AppSearchCallStatsReported {
+    // The sampling ratio for this specific type of stats
+    // For example, sampling_ratio=10 means that one out of every 10 stats was logged.
+    optional int32 sampling_ratio = 1;
+
+    // # of previous skipped sample for this specific type of stats
+    // For WestWorld we can't push atoms too closely, so some samples might be skipped
+    // In order to extrapolate the counts, we need to save the number and add it back
+    // For example, the true count of an event could be estimated as:
+    //   SUM(sampling_ratio * (num_skipped_sample + 1)) as est_count
+    optional int32 num_skipped_sample = 2;
+
+    // Package UID of the application.
+    optional int32 uid = 3 [(is_uid) = true];
+
+    // Hash of the database name within AppSearch
+    optional int32 database = 4;
+
+    // The status code for the call or internal state.
+    // Needs to be sync with code in google3/third_party/icing/proto/status.proto
+    optional int32 status_code = 5;
+
+    // Overall time used for the end-to-end function call in AppSearch
+    optional int32 total_latency_millis = 6;
+
+    // Type of the function call value is in sync with
+    // frameworks/base/apex/appsearch/service/java/com/android/server/appsearch/external/localstorage/stats/CallStats.java
+    optional int32 call_type = 7;
+
+    // Estimated binder latency (estimated as single-trip time * 2)
+    optional int32 estimated_binder_latency_millis = 8;
+
+    // Number of operations succeeded for batch operations.
+    optional int32 num_operations_succeeded = 9;
+
+    // Number of operations failed for batch operations.
+    optional int32 num_operations_failed = 10;
+}
+
+/**
+ * Logs detailed stats for putting a single document in AppSearch
+ */
+message AppSearchPutDocumentStatsReported {
+    // The sampling ratio for this specific type of stats
+    // For example, sampling_ratio=10 means that one out of every 10 stats was logged.
+    optional int32 sampling_ratio = 1;
+
+    // # of previous skipped sample for this specific type of stats
+    // For WestWorld we can't push atoms too closely, so some samples might be skipped
+    // In order to extrapolate the counts, we need to save the number and add it back
+    // For example, the true count of an event could be estimated as:
+    //   SUM(sampling_ratio * (num_skipped_sample + 1)) as est_count
+    optional int32 num_skipped_sample = 2;
+
+    // Package UID of the application.
+    optional int32 uid = 3 [(is_uid) = true];
+
+    // Hash of the database name within AppSearch
+    optional int32 database = 4;
+
+    // Needs to be sync with code in google3/third_party/icing/proto/status.proto
+    optional int32 status_code = 5;
+
+    // Overall time used for a put_document
+    optional int32 total_latency_millis = 6;
+
+    // Time used to generate a document proto from a Bundle.
+    optional int32 generate_document_proto_latency_millis = 7;
+
+    // Time used to rewrite types and namespaces in the document.
+    optional int32 rewrite_document_types_latency_millis = 8;
+
+    // Overall time used for the native function call.
+    optional int32 native_latency_millis = 9;
+
+    // Time used to store the document.
+    optional int32 native_document_store_latency_millis = 10;
+
+    // Time used to index the document. It doesn't include the time to
+    // merge indices.
+    optional int32 native_index_latency_millis = 11;
+
+    // Time used to merge the indices.
+    optional int32 native_index_merge_latency_millis = 12;
+
+    // Document size in bytes.
+    optional int32 native_document_size_bytes = 13;
+
+    // Number of tokens added to the index.
+    optional int32 native_num_tokens_indexed = 14;
+
+    // Whether the max number of tokens exceeded.
+    optional bool native_exceeded_max_num_tokens = 15;
 }
 
 /**
