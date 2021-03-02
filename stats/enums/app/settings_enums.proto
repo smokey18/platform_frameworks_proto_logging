@@ -826,6 +826,31 @@ enum Action {
     // CATEGORY: SETTINGS
     // OS: S
     ACTION_SCREEN_ATTENTION_CHANGED = 1755;
+
+    // ACTION: Settings > System > Gestures > Back tap > Open app
+    // CATEGORY: SETTINGS
+    // OS: S
+    ACTION_COLUMBUS_ACTION_OPEN_APP = 1756;
+
+    // ACTION: Settings > System > Gestures > Back tap > Open app (Gear icon) > Any
+    // CATEGORY: SETTINGS
+    // OS: S
+    ACTION_COLUMBUS_SELECT_APP = 1757;
+
+    // OPEN: Columbus Gesture training action in Settings
+    // CATEGORY: SETTINGS
+    // OS: S
+    SETTINGS_COLUMBUS_GESTURE_TRAINING_ACTION = 1758;
+
+    // OPEN: Columbus Gesture training app selection in Settings
+    // CATEGORY: SETTINGS
+    // OS: S
+    SETTINGS_COLUMBUS_GESTURE_TRAINING_APP = 1759;
+
+    // ACTION: Settings > System > Gestures > Back tap > Open app (Gear icon) > Any app (Gear icon) > Any
+    // CATEGORY: SETTINGS
+    // OS: S
+    ACTION_COLUMBUS_SELECT_APP_SHORTCUT = 1760;
 }
 
 /**
@@ -2894,4 +2919,14 @@ enum PageId {
     // CATEGORY: SETTINGS
     // OS: S
     ACCESSIBILITY_BUTTON_SETTINGS = 1870;
+
+    // OPEN: Settings > System > Gestures > Back tap > Open app (Gear icon)
+    // CATEGORY: SETTINGS
+    // OS: S
+    SETTINGS_COLUMBUS_APP_SELECT = 1871;
+
+    // OPEN: Settings > System > Gestures > Back tap > Open app (Gear icon) > Any app (Gear icon)
+    // CATEGORY: SETTINGS
+    // OS: S
+    SETTINGS_COLUMBUS_APP_SHORTCUT_SELECT = 1872;
 }
