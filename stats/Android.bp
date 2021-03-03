@@ -67,6 +67,7 @@ filegroup {
     ],
 }
 
+
 filegroup {
     name: "libstats_atom_enum_protos",
     srcs: [
