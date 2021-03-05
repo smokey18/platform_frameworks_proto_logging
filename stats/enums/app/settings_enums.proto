@@ -801,12 +801,31 @@ enum Action {
     SETTINGS_COLUMBUS_GESTURE_TRAINING_FINISHED = 1750;
 
     // ACTION: Settings > Display > Auto-rotate screen > Enable Face Detection
+    //  SUBTYPE: 0 is off, 1 is on
     // CATEGORY: SETTINGS
     // OS: S
     ACTION_CAMERA_ROTATE_TOGGLE = 1751;
 
     // ACTION: Allow or deny an app to set alarms and reminders
     ACTION_ALARMS_AND_REMINDERS_TOGGLE = 1752;
+
+    // ACTION: Settings > Display > Auto-rotate screen > Use Auto-Rotate
+    //  SUBTYPE: 0 is off, 1 is on
+    // CATEGORY: SETTINGS
+    // OS: S
+    ACTION_ROTATE_ROTATE_MASTER_TOGGLE = 1753;
+
+    // ACTION: Settings > Display > Screen timeout > Timeout
+    //  SUBTYPE: new timeout in millis
+    // CATEGORY: SETTINGS
+    // OS: S
+    ACTION_SCREEN_TIMEOUT_CHANGED = 1754;
+
+    // ACTION: Settings > Display > Screen timeout > Screen attention
+    //  SUBTYPE: 0 is off, 1 is on
+    // CATEGORY: SETTINGS
+    // OS: S
+    ACTION_SCREEN_ATTENTION_CHANGED = 1755;
 }
 
 /**
@@ -2398,6 +2417,7 @@ enum PageId {
 
     // OPEN: Settings > Display > Adaptive sleep
     // OS: Q
+    // Note: Replaced in Android S+ with SCREEN_TIMEOUT
     SETTINGS_ADAPTIVE_SLEEP = 1628;
 
     // OPEN: Settings > System > Aware
