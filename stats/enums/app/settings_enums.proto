@@ -851,6 +851,14 @@ enum Action {
     // CATEGORY: SETTINGS
     // OS: S
     ACTION_COLUMBUS_SELECT_APP_SHORTCUT = 1760;
+
+    // ACTION: Mobile network settings > Advanced > Allow 2G > Toggle on/off
+    // Note: Can be re-enabled via carrier-initiated update to
+    // CarrierConfigManager.
+    // VALUE: 1 for 2G enabled, 0 for disabled
+    // CATEGORY: SETTINGS
+    // OS: S
+    ACTION_2G_ENABLED = 1761;
 }
 
 /**
