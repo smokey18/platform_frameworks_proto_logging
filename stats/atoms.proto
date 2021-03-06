@@ -542,6 +542,7 @@ message Atom {
         AppSearchPutDocumentStatsReported app_search_put_document_stats_reported = 348 [(module) = "framework"];
         DeviceControlChanged device_control_changed = 349 [(module) = "sysui"];
 
+        InputDeviceRegistered inputdevice_registered = 351 [(module) = "framework"];
         // StatsdStats tracks platform atoms with ids upto 500.
         // Update StatsdStats::kMaxPushedAtomId when atom ids here approach that value.
     }
@@ -3078,6 +3079,28 @@ message BluetoothHALCrashReasonReported {
     optional int32 vendor_error_code = 4;
 }
 
+/* Logs input device information when input device is registered with Android device.
+ * Reported at when a new input device is found by EventHub.
+ *
+ * Logged from:
+ *   frameworks/native/services/inputflinger
+ */
+message InputDeviceRegistered {
+    // The Input Device Name
+    optional string name = 1;
+    // The Input Device Vendor ID
+    optional int32 vendor_id = 2;
+    // The Input Device Product ID
+    optional int32 product_id = 3;
+    // The Input Device Version ID
+    optional int32 version_id = 4;
+    // The Input Device Bus ID
+    optional int32 bus_id = 5;
+    // The Input Device Unique ID
+    optional string uniq_id = 6;
+    // The Input Device Classes
+    optional int32 device_classes = 7;
+}
 
 /**
  * Logs when something is plugged into or removed from the USB-C connector.
