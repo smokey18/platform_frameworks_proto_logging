@@ -36,8 +36,8 @@ enum ServiceStatus {
 
 // The magnification mode.
 enum MagnificationMode {
-  UNKNOWN_MODE = 0;
-  FULL_SCREEN = 1;
-  WINDOW = 2;
-  ALL = 3;
+  MAGNIFICATION_UNKNOWN_MODE = 0;
+  MAGNIFICATION_FULL_SCREEN = 1;
+  MAGNIFICATION_WINDOW = 2;
+  MAGNIFICATION_ALL = 3;
 }
