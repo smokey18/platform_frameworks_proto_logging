@@ -742,7 +742,7 @@ message ThermalThrottlingStateChanged {
  * Track transcoding service usage
  * Logged from:
  *   packages/providers/MediaProvider/src/com/android/providers/media/TranscodeHelper.java
- * Next Tag: 6
+ * Next Tag: 14
  */
 message TranscodingData {
     // Reason that leads to the type of access.
@@ -790,6 +790,7 @@ message TranscodingData {
     optional int64 height = 10;
     optional bool hit_anr = 11;
     optional FailureCause failure_cause = 12;   // This field is valid only when fails.
+    optional int64 transcoding_service_error_code = 13; // Error code from transcoding service.
 }
 
 /**
