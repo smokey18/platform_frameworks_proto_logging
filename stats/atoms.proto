@@ -13400,44 +13400,47 @@ message ProcessStat {
 /*
  * pushes Media playback information.
  * Logged from
- *   (WIP) frameworks/av/services/mediaanalytics/playback_statsd.cpp
+ *  frameworks/base/services/core/java/com/android/server/media/metrics/
+ *      MediaMetricsManagerService.java
  */
 message MediametricsPlaybackReported {
     optional int32 uid = 1 [(is_uid) = true];
 
-    //  Randomly generated playback ID. A Base64 encoded hex string representing a 128-bit integer
+    // Randomly generated playback ID. A Base64 encoded hex string representing a 128-bit integer
     optional string playback_id = 2;
-    //  The total length of the media in milliseconds. 0 for live contents.
+    // The total length of the media in milliseconds. 0 for live contents.
     optional int64 media_duration_millis = 3;
-    //  Network, device, or mixed.
+    // Network, device, or mixed.
     optional android.stats.mediametrics.StreamSourceType stream_source = 4;
-    //  Stream type. DASH, HLS, etc
+    // Stream type. DASH, HLS, etc
     optional android.stats.mediametrics.StreamType stream_type = 5;
-    //  Live, VOD, others
+    // Live, VOD, others
     optional android.stats.mediametrics.PlaybackType playback_type = 6;
-    //  DRM type
+    // DRM type
     optional android.stats.mediametrics.DrmType drm_type = 7;
-    //  Main, AD, others
+    // Main, AD, others
     optional android.stats.mediametrics.ContentType content_type = 8;
-    //  Player name. E.g. ExoPlayer
+    // Player name. E.g. ExoPlayer
     optional string player_name = 9;
-    //  Player version. E.g. 1.10.3e
+    // Player version. E.g. 1.10.3e
     optional string player_version = 10;
-    //  Player related experiment IDs
+    // Player related experiment IDs
     optional Experiments experiment_ids = 11 [(log_mode) = MODE_BYTES];
-    //  Number of frames played. Dropped frames included. -1 means unknown.
+    // Number of frames played. Dropped frames included. -1 means unknown.
     optional int32 video_frames_played = 12;
-    //  Number of frames dropped. -1 means unknown.
+    // Number of frames dropped. -1 means unknown.
     optional int32 video_frames_dropped = 13;
-    //  Number of audio underruns. -1 means unknown.
+    // Number of audio underruns. -1 means unknown.
     optional int32 audio_underrun_count = 14;
-    //  Total number of bytes read from the network
+    // Total number of bytes read from the network
     optional int64 network_bytes_read = 15;
-    //  Total number of bytes read from on-device sources
+    // Total number of bytes read from on-device sources
     optional int64 local_bytes_read = 16;
-    //  Total transfer spent reading from the network in ms.
+    // Total transfer spent reading from the network in ms.
     // For parallel requests, the overlapping time intervals are counted only once.
     optional int64 network_transfer_duration_millis = 17;
+    // A session ID generated from DRM to distinguish different DRM sessions.
+    optional string drm_session_id = 18;
 }
 
 message MediaNetworkInfoChanged {
@@ -13509,6 +13512,8 @@ message MediaPlaybackTrackChanged {
     optional int32 width = 14;
     //  The height of the video in pixels.
     optional int32 height = 15;
+    //  Video frame rate in frames per second.
+    optional float video_frame_rate = 16;
 }
 
 message Experiments {
