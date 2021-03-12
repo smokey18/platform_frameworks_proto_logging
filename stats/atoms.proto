@@ -9475,6 +9475,9 @@ message LocationManagerApiUsageReported {
     // Activity Importance of API caller.
     // Categorized to 3 types that are interesting from location's perspective.
     optional android.stats.location.ActivityImportance activiy_importance = 12;
+
+    // Attribution tag passed to this API.
+    optional string attribution_tag = 13;
 }
 
 /**
