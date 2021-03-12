@@ -3743,7 +3743,11 @@ message AppCrashOccurred {
 
     optional android.server.ErrorSource error_source = 8;
 
-    optional bool is_package_loading = 9;
+    optional bool is_incremental = 9;
+
+    optional float loading_progress = 10;
+
+    optional int64 millis_since_oldest_pending_read = 11;
 }
 
 /**
@@ -3806,7 +3810,11 @@ message ANROccurred {
 
     optional string package_name = 8;
 
-    optional bool is_package_loading = 9;
+    optional bool is_incremental = 9;
+
+    optional float loading_progress = 10;
+
+    optional int64 millis_since_oldest_pending_read = 11;
 }
 
 /**
