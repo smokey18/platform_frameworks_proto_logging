@@ -770,7 +770,7 @@ message TranscodingData {
         CAUSE_UNKNOWN = 0;
         TRANSCODING_SERVICE_ERROR = 1;     // Error from transcoding service.
         TRANSCODING_CLIENT_TIMEOUT = 2;    // Timeout from MediaProvider.
-        TRANSCODING_SESSOION_CANCELED = 3; // MediaProvider cancels the transcode.
+        TRANSCODING_SESSION_CANCELED = 3; // MediaProvider cancels the transcode.
     }
 
     enum AccessType {
