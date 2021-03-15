@@ -1388,6 +1388,11 @@ message ScheduledJobStateChanged {
     optional bool has_idle_constraint = 12;
     optional bool has_connectivity_constraint = 13;
     optional bool has_content_trigger_constraint = 14;
+
+    // True if the app has requested this run as an expedited job.
+    optional bool is_requested_expedited_job = 15;
+    // True if the job is running as an expedited job. Only valid for STARTED and FINISHED states.
+    optional bool is_running_as_expedited_job = 16;
 }
 
 /**
