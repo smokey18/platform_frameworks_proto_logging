@@ -549,7 +549,7 @@ message Atom {
     }
 
     // Pulled events will start at field 10000.
-    // Next: 10100
+    // Next: 10101
     oneof pulled {
         WifiBytesTransfer wifi_bytes_transfer = 10000 [(module) = "framework"];
         WifiBytesTransferByFgBg wifi_bytes_transfer_by_fg_bg = 10001 [(module) = "framework"];
@@ -661,6 +661,7 @@ message Atom {
         DeviceRotatedData device_rotated_data = 10097 [(module) = "framework"];
         CpuCyclesPerThreadGroupCluster cpu_cycles_per_thread_group_cluster = 10098 [(module) = "framework"];
         MediaDrmActivityInfo media_drm_activity_info = 10099;
+        OemManagedBytesTransfer oem_managed_bytes_transfer = 10100 [(module) = "framework"];
     }
 
     // DO NOT USE field numbers above 100,000 in AOSP.
@@ -5692,6 +5693,39 @@ message DataUsageBytesTransfer {
     // connected.
     optional bool is_nr_connected = 11;
 }
+
+/**
+ * Pulls bytes transferred via OEM managed networks. Data is split up by which
+ * type of OEM managed network it is, what transport it went over, and if it was
+ * in the foreground or background.
+ *
+ * Pulled from:
+ *   StatsPullAtomService
+ */
+ message OemManagedBytesTransfer {
+    optional int32 uid = 1 [(is_uid) = true];
+
+    // 1 denotes foreground and 0 denotes background. This is called Set in
+    // NetworkStats.
+    optional bool is_foreground = 2;
+
+    // Corresponds to the type of OEM managed network, see
+    // {@link NetworkTemplate#OEM_MANAGED_ANY} and {@code NetworkIdentity#OEM_*}.
+    optional int32 oem_managed_type = 3;
+
+    // Corresponds to the type of transport the bytes were transferred over, see
+    // {@link NetworkTemplate#transportToMatchRule} and
+    // {@code NetworkCapabilities#TRANSPORT_*}
+    optional int32 transport_type = 4;
+
+    optional int64 rx_bytes = 5;
+
+    optional int64 rx_packets = 6;
+
+    optional int64 tx_bytes = 7;
+
+    optional int64 tx_packets = 8;
+  }
 
 /**
  * Pulls bytes transferred via bluetooth. It is pulled from Bluetooth controller.
