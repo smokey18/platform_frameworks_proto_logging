@@ -542,8 +542,8 @@ message Atom {
         AppSearchPutDocumentStatsReported app_search_put_document_stats_reported = 348 [(module) = "framework"];
         DeviceControlChanged device_control_changed = 349 [(module) = "sysui"];
         DeviceStateChanged device_state_changed = 350 [(module) = "framework"];
-
         InputDeviceRegistered inputdevice_registered = 351 [(module) = "framework"];
+        SmartSpaceCardReported smartspace_card_reported = 352 [(module) = "sysui"];
         // StatsdStats tracks platform atoms with ids upto 500.
         // Update StatsdStats::kMaxPushedAtomId when atom ids here approach that value.
     }
@@ -3457,6 +3457,52 @@ message LauncherUIChanged {
 
     // e.g., number of contents inside a container (e.g., icons inside a folder)
     optional int32 cardinality = 24;
+}
+
+message SmartSpaceCardReported {
+    // Different SmartSpace cards.
+    enum CardType {
+        DEFAULT_CARD = 0;
+        COMMUTE = 1;
+        CALENDAR = 2;
+        FLIGHT = 3;
+        WEATHER = 4;
+        WEATHER_ALERT = 5;
+        AT_A_STORE_SHOPPING_LIST = 6;
+        AT_A_STORE_LOYALTY_CARD = 7;
+        HEADPHONE = 8;
+        TIMER = 9;
+        STOPWATCH = 10;
+        FITNESS_ACTIVITY = 11;
+        UPCOMING_REMINDER = 12;
+        UPCOMING_BEDTIME = 13;
+        TIME_TO_LEAVE = 14;
+        PACKAGE_DELIVERY = 15;
+        SPORT = 16;
+        STOCK = 17;
+        TIPS = 18;
+    }
+
+    // The surface that SmartSpace card is shown.
+    enum DisplaySurface {
+        DEFAULT_SURFACE = 0;
+        HOMESCREEN = 1;
+        LOCKSCREEN = 2;
+        AOD = 3;
+    }
+
+    // The event id (e.g., impression, click, longpress, dismiss)
+    optional int32 event_id = 1;
+    // Uniquely identifies a card. Should persist through updates.
+    optional int32 instance_id = 2;
+    // Uniquely identifies one of the possible types of the SmartSpace cards.
+    optional CardType card_type = 3;
+    // Location of the card when the event occurred.
+    optional DisplaySurface display_surface = 4;
+    // The position of the card in the carousel when the event occurred.
+    optional int32 rank = 5;
+    // The number of cards shown to the user.
+    optional int32 cardinality = 6;
 }
 
 /**
