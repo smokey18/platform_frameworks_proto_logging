@@ -674,6 +674,7 @@ message Atom {
         OemManagedBytesTransfer oem_managed_bytes_transfer = 10100 [(module) = "framework"];
         GnssPowerStats gnss_power_stats = 10101 [(module) = "framework"];
         TimeZoneDetectorState time_zone_detector_state = 10102 [(module) = "framework"];
+        Keystore2StorageStats keystore2_storage_stats = 10103;
     }
 
     // DO NOT USE field numbers above 100,000 in AOSP.
@@ -13417,6 +13418,36 @@ message Keystore2KeyOperationEventReported {
  * Logged from: system/security/keystore2
  */
 message Keystore2CrashEventReported {}
+
+/**
+ * Logs: Keystore 2 storage statistics.
+ * Logged from: system/security/keystore2
+ */
+message Keystore2StorageStats {
+    enum Storage {
+       STORAGE_UNSPECIFIED = 0;
+       KEY_ENTRY = 1;
+       KEY_ENTRY_ID_INDEX = 2;
+       KEY_ENTRY_DOMAIN_NAMESPACE_INDEX = 3;
+       BLOB_ENTRY = 4;
+       BLOB_ENTRY_KEY_ENTRY_ID_INDEX = 5;
+       KEY_PARAMETER = 6;
+       KEY_PARAMETER_KEY_ENTRY_ID_INDEX = 7;
+       KEY_METADATA = 8;
+       KEY_METADATA_KEY_ENTRY_ID_INDEX = 9;
+       GRANT = 10;
+       AUTH_TOKEN = 11;
+       BLOB_METADATA = 12;
+       BLOB_METADATA_BLOB_ENTRY_ID_INDEX =13;
+       METADATA = 14;
+       DATABASE = 15;
+       LEGACY_STORAGE = 16;
+    }
+    /**Type of the storage (database table or legacy storage) of which the size is reported.*/
+    optional Storage storage_type = 1;
+    /**Storage size in bytes*/
+    optional int64 size = 2;
+}
 
 // Blob Committer stats
 // Keep in sync between:
