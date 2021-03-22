@@ -13363,21 +13363,33 @@ message AutoRotateReported {
 }
 
 /**
- * Logs when sensors only autorotate is triggered. This does not necessarily cause the screen to
- * rotate due to reasons such as autorotate is disabled or the app does not support screen rotation.
- * Even in those cases, logging will happen because sensor trigger has happened.
+ * Logs when sensors only autorotate is triggered. Associated event can be a rotation preindication,
+ * actual event or a "data ready to be pulled" indication. More info: go/autorotate-logging.
  *
  * Logged from:
- *   frameworks/base/services/core/java/com/android/server/policy/WindowOrientationListener.java
+ *    platform/vendor/unbundled_google/packages/SystemUIGoogle/src/com/google/android/systemui/autorotate/DataLogger.java
  */
 
 message DeviceRotated {
-  // Timestamp of the detected device rotation in millis. We log the timestamp
-  // explicitly since data logging will follow the event logging and all these
+  // Timestamp of the event in millis. We log the timestamp explicitly since
+  // data logging will follow the event logging and all these
   // will be joined with other logs such as rotation button clicked.
   optional int64 timestamp_millis = 1;
   // Device orientation
   optional android.stats.wm.Orientation proposed_orientation = 2;
+
+  enum RotationEventType{
+    UNKNOWN = 0;
+    // An early indication of device might be rotated.
+    PREINDICATION = 1;
+    // Device rotation is detected.
+    ACTUAL_EVENT = 2;
+    // Device rotated and the data associated with it is ready to be pulled.
+    // This happens after the ACTUAL_EVENT since some data after the event is
+    // also useful.
+    DATA_READY = 3;
+  }
+  optional RotationEventType rotation_event_type = 3;
 }
 
 /**
@@ -13385,7 +13397,7 @@ message DeviceRotated {
  * configured to be conditioned on the {@code DeviceRotated} atom.
  *
  * Logged from:
- *   frameworks/base/services/core/java/com/android/server/policy/WindowOrientationListener.java
+ *     platform/vendor/unbundled_google/packages/SystemUIGoogle/src/com/google/android/systemui/autorotate/DataLogger.java
  */
 message DeviceRotatedData {
   // All the sensor data and timestamps used to calculate the orientation
