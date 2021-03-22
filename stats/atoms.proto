@@ -666,6 +666,7 @@ message Atom {
         CpuCyclesPerThreadGroupCluster cpu_cycles_per_thread_group_cluster = 10098 [(module) = "framework"];
         MediaDrmActivityInfo media_drm_activity_info = 10099;
         OemManagedBytesTransfer oem_managed_bytes_transfer = 10100 [(module) = "framework"];
+        GnssPowerStats gnss_power_stats = 10101 [(module) = "framework"];
     }
 
     // DO NOT USE field numbers above 100,000 in AOSP.
@@ -12229,6 +12230,76 @@ message GnssStats {
 
     // Total number of L5 sv status messages reports, where sv is used in fix since boot
     optional int64 l5_sv_status_reports_used_in_fix = 14;
+}
+
+/**
+ * Logs power usage data from GNSS subsystem.
+ *
+ * Logged from:
+ *   /frameworks/base/location/java/com/android/internal/location/gnssmetrics/GnssMetrics.java
+ */
+message GnssPowerStats {
+    // Relative precision of the alignment of the reported power stats measurement.
+    optional int64 elapsed_realtime_uncertainty_nanos = 1;
+
+    // Total GNSS energy consumption in micro-joules (or micro Watt-seconds).
+    optional int64 total_energy_micro_joule = 2;
+
+    // Total energy consumption in micro-joules (or micro Watt-seconds) for which the GNSS engine is
+    // tracking signals of a single frequency band.
+    optional int64 singleband_tracking_mode_energy_micro_joule = 3;
+
+    // Total energy consumption in micro-joules (or micro Watt-seconds) for which the GNSS engine is
+    // tracking signals of multiple frequency bands.
+    optional int64 multiband_tracking_mode_energy_micro_joule = 4;
+
+    // Total energy consumption in micro-joules (or micro Watt-seconds) for which the GNSS engine is
+    // acquiring signals of a single frequency band.
+    optional int64 singleband_acquisition_mode_energy_micro_joule = 5;
+
+    // Total energy consumption in micro-joules (or micro Watt-seconds) for which the GNSS engine is
+    // acquiring signals of multiple frequency bands.
+    optional int64 multiband_acquisition_mode_energy_micro_joule = 6;
+
+    // Total energy consumption in micro-joules (microWatt-seconds) for which the GNSS engine is
+    // operating in each of the vendor-specific power modes. (Index 0)
+    optional int64 vendor_specific_power_modes_energy_micro_joule_0 = 7;
+
+    // Total energy consumption in micro-joules (microWatt-seconds) for which the GNSS engine is
+    // operating in each of the vendor-specific power modes. (Index 1)
+    optional int64 vendor_specific_power_modes_energy_micro_joule_1 = 8;
+
+    // Total energy consumption in micro-joules (microWatt-seconds) for which the GNSS engine is
+    // operating in each of the vendor-specific power modes. (Index 2)
+    optional int64 vendor_specific_power_modes_energy_micro_joule_2 = 9;
+
+    // Total energy consumption in micro-joules (microWatt-seconds) for which the GNSS engine is
+    // operating in each of the vendor-specific power modes. (Index 3)
+    optional int64 vendor_specific_power_modes_energy_micro_joule_3 = 10;
+
+    // Total energy consumption in micro-joules (microWatt-seconds) for which the GNSS engine is
+    // operating in each of the vendor-specific power modes. (Index 4)
+    optional int64 vendor_specific_power_modes_energy_micro_joule_4 = 11;
+
+    // Total energy consumption in micro-joules (microWatt-seconds) for which the GNSS engine is
+    // operating in each of the vendor-specific power modes. (Index 5)
+    optional int64 vendor_specific_power_modes_energy_micro_joule_5 = 12;
+
+    // Total energy consumption in micro-joules (microWatt-seconds) for which the GNSS engine is
+    // operating in each of the vendor-specific power modes. (Index 6)
+    optional int64 vendor_specific_power_modes_energy_micro_joule_6 = 13;
+
+    // Total energy consumption in micro-joules (microWatt-seconds) for which the GNSS engine is
+    // operating in each of the vendor-specific power modes. (Index 7)
+    optional int64 vendor_specific_power_modes_energy_micro_joule_7 = 14;
+
+    // Total energy consumption in micro-joules (microWatt-seconds) for which the GNSS engine is
+    // operating in each of the vendor-specific power modes. (Index 8)
+    optional int64 vendor_specific_power_modes_energy_micro_joule_8 = 15;
+
+    // Total energy consumption in micro-joules (microWatt-seconds) for which the GNSS engine is
+    // operating in each of the vendor-specific power modes. (Index 9)
+    optional int64 vendor_specific_power_modes_energy_micro_joule_9 = 16;
 }
 
 /**
