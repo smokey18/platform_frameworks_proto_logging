@@ -10218,6 +10218,7 @@ message CellBroadcastMessageFiltered {
         DUPLICATE_MESSAGE = 1;
         GEOFENCED_MESSAGE = 2;
         AREA_INFO_MESSAGE = 3;
+        DISABLED_BY_OEM = 4;
     }
 
     // GSM, CDMA, CDMA-SCP
