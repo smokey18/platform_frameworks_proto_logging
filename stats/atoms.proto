@@ -3492,7 +3492,7 @@ message LauncherUIChanged {
 message SmartSpaceCardReported {
     // Different SmartSpace cards.
     enum CardType {
-        DEFAULT_CARD = 0;
+        UNKNOWN_CARD = 0;
         COMMUTE = 1;
         CALENDAR = 2;
         FLIGHT = 3;
@@ -3500,17 +3500,16 @@ message SmartSpaceCardReported {
         WEATHER_ALERT = 5;
         AT_A_STORE_SHOPPING_LIST = 6;
         AT_A_STORE_LOYALTY_CARD = 7;
-        HEADPHONE = 8;
-        TIMER = 9;
-        STOPWATCH = 10;
-        FITNESS_ACTIVITY = 11;
-        UPCOMING_REMINDER = 12;
-        UPCOMING_BEDTIME = 13;
-        TIME_TO_LEAVE = 14;
-        PACKAGE_DELIVERY = 15;
-        SPORT = 16;
-        STOCK = 17;
-        TIPS = 18;
+        HEADPHONE_RESUME_MEDIA = 8;
+        HEADPHONE_MEDIA_RECOMMENDATIONS = 9;
+        TIMER = 10;
+        STOPWATCH = 11;
+        FITNESS_ACTIVITY = 12;
+        UPCOMING_REMINDER = 13;
+        UPCOMING_BEDTIME = 14;
+        TIME_TO_LEAVE = 15;
+        PACKAGE_DELIVERED = 16;
+        TIPS = 17;
     }
 
     // The surface that SmartSpace card is shown.
