@@ -560,7 +560,7 @@ message Atom {
     }
 
     // Pulled events will start at field 10000.
-    // Next: 10103
+    // Next: 10106
     oneof pulled {
         WifiBytesTransfer wifi_bytes_transfer = 10000 [(module) = "framework"];
         WifiBytesTransferByFgBg wifi_bytes_transfer_by_fg_bg = 10001 [(module) = "framework"];
@@ -677,6 +677,7 @@ message Atom {
         TimeZoneDetectorState time_zone_detector_state = 10102 [(module) = "framework"];
         Keystore2StorageStats keystore2_storage_stats = 10103;
         RkpPoolStats rkp_pool_stats = 10104;
+        ProcessDmabufMemory process_dmabuf_memory = 10105 [(module) = "framework"];
     }
 
     // DO NOT USE field numbers above 100,000 in AOSP.
@@ -9212,6 +9213,38 @@ message SystemMemory {
     // Total DMABUF memory allocations
     // Reported from os.Debug.getDmabufTotalExportedKb (S+)
     optional int32 dmabuf_total_exported_kb = 9;
+}
+
+/*
+ * Log dmabuf memory retained by userspace processes.
+ * Pulled from StatsPullAtomService.
+ */
+ message ProcessDmabufMemory {
+  // The uid if available. -1 means not available.
+  optional int32 uid = 1 [(is_uid) = true];
+
+  // The process name (from ActivityManager).
+  optional string process_name = 2;
+
+  // OOM adj score.
+  optional int32 oom_adj_score = 3;
+
+  // Size of dmabufs retained by the process. The buffers are either mapped,
+  // retained via an fd, or both.
+  // Only available on supported kernel versions (5.4+). When unavailable, set
+  // to -1.
+  optional int32 retained_dmabuf_kb = 4;
+
+  // Number of buffers retained by the process (mapped / fd).
+  // Only available on supported kernel versions (5.4+). When unavailable, set
+  // to -1.
+  optional int32 retained_dmabuf_count = 5;
+
+  // Size of dmabufs mapped to the process address space.
+  optional int32 mapped_dmabuf_kb = 6;
+
+  // Number of dmabufs mapped to the process address space.
+  optional int32 mapped_dmabuf_count = 7;
 }
 
 /**
