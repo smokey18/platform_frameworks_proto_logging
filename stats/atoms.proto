@@ -9544,6 +9544,13 @@ message UpdateEngineSuccessfulUpdateReported {
 
     // The number of reboot of the device during a successful update.
     optional int32 reboot_count = 7;
+
+    // Whether on device verity computation is enabled
+    optional bool fec_enabled = 8;
+
+    // Whether on device hash tree computation is enabled
+    optional bool hash_tree_enabled = 9;
+
 }
 
 /**
