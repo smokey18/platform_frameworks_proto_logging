@@ -555,6 +555,9 @@ message Atom {
         Keystore2KeyOperationEventReported keystore2_key_operation_event_reported = 361;
         Keystore2CrashEventReported keystore2_crash_event_reported = 362;
         RkpErrorReported rkp_error_reported = 363;
+        TimeoutAutoExtendedReported timeout_auto_extended_reported = 364
+            [(module) = "framework"];
+
         // StatsdStats tracks platform atoms with ids upto 500.
         // Update StatsdStats::kMaxPushedAtomId when atom ids here approach that value.
     }
@@ -12264,6 +12267,28 @@ message FaceDownReported {
     // A low value may indicate a false negative. Logged only when Response is
     // SCREEN_OFF.
     optional int64 millis_until_next_screen_on = 4;
+}
+
+/**
+ * Logs timeout extended events which occur from consecutive undims.
+ *
+ * Logged from:
+ *   frameworks/opt/telephony/src/java/com/android/server/power/ScreenUndimDetector.java
+ */
+message TimeoutAutoExtendedReported {
+    enum Outcome {
+        UNKNOWN = 0;
+        POWER_BUTTON = 1;
+        TIMEOUT = 2;
+    }
+
+    // Logs the action that occurs after timeout is extended from undim.
+    optional Outcome outcome = 1;
+    // Time from timeout extension to the outcome.
+    optional int64 time_to_outcome_millis = 2;
+    // Time of first interaction after undim if an interaction occurs.
+    // -1 if no interaction occurs before screen turns off.
+    optional int64 time_to_first_interaction_millis = 3;
 }
 
 /**
