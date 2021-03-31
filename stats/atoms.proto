@@ -14814,6 +14814,7 @@ message DeviceStateChanged {
  */
 message MetricsTimeZoneSuggestion {
     enum Type {
+        UNKNOWN = 0;
         CERTAIN = 1;
         UNCERTAIN = 2;
     }
@@ -14849,6 +14850,7 @@ message TimeZoneDetectorState {
     optional bool geo_detection_setting = 5;
 
     enum DetectionMode {
+        UNKNOWN = 0;
         MANUAL = 1;
         TELEPHONY = 2;
         GEO = 3;
