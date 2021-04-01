@@ -555,7 +555,7 @@ message Atom {
         Keystore2KeyOperationEventReported keystore2_key_operation_event_reported = 361;
         Keystore2CrashEventReported keystore2_crash_event_reported = 362;
         RkpErrorReported rkp_error_reported = 363;
-        TimeoutAutoExtendedReported timeout_auto_extended_reported = 364
+        TimeoutAutoExtendedReported timeout_auto_extended_reported = 365
             [(module) = "framework"];
 
         // StatsdStats tracks platform atoms with ids upto 500.
