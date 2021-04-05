@@ -59,6 +59,7 @@ import "frameworks/proto_logging/stats/enums/stats/storage/storage_enums.proto";
 import "frameworks/proto_logging/stats/enums/stats/style/style_enums.proto";
 import "frameworks/proto_logging/stats/enums/stats/sysui/notification_enums.proto";
 import "frameworks/proto_logging/stats/enums/stats/tls/enums.proto";
+import "frameworks/proto_logging/stats/enums/system/security/keystore2/enums.proto";
 import "frameworks/proto_logging/stats/enums/telecomm/enums.proto";
 import "frameworks/proto_logging/stats/enums/telephony/enums.proto";
 import "frameworks/proto_logging/stats/enums/view/enums.proto";
@@ -12103,6 +12104,9 @@ message Keystore2KeyCreationEventReported {
 
     // Indicates whether key attestation requested in creation
     optional bool attestation_requested = 12;
+
+    // Security level of the Keymint instance which creates the key.
+    optional android.system.security.keystore2.SecurityLevelEnum security_level = 13;
 }
 
 /**
@@ -12183,6 +12187,9 @@ message Keystore2KeyOperationEventReported {
 
     // Indicates whether the key was upgraded during the operation
     optional bool key_upgraded = 7;
+
+    // Security level of the Keymint instance which performs the operation.
+    optional android.system.security.keystore2.SecurityLevelEnum security_level = 8;
 }
 
 /**
