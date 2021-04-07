@@ -420,7 +420,8 @@ message Atom {
         SnapshotMergeReported snapshot_merge_reported = 255;
         ForegroundServiceAppOpSessionEnded foreground_service_app_op_session_ended =
             256  [(module) = "framework"];
-        DisplayJankReported display_jank_reported = 257;
+        // DisplayJankReported was deprecated in Android 12+
+        DisplayJankReported display_jank_reported = 257 [deprecated = true];
         AppStandbyBucketChanged app_standby_bucket_changed = 258 [(module) = "framework"];
         SharesheetStarted sharesheet_started = 259 [(module) = "framework"];
         RankingSelected ranking_selected = 260 [(module) = "framework", (module) = "sysui"];
