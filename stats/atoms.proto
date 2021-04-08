@@ -13971,8 +13971,9 @@ message ProcessStat {
 message MediametricsPlaybackReported {
     optional int32 uid = 1 [(is_uid) = true];
 
-    // Randomly generated playback ID. A Base64 encoded hex string representing a 128-bit integer
-    optional string playback_id = 2;
+    // Randomly generated log session ID. A Base64 encoded hex string representing a
+    // 128-bit integer.
+    optional string log_session_id = 2;
     // The total length of the media in milliseconds. 0 for live contents.
     optional int64 media_duration_millis = 3;
     // Network, device, or mixed.
@@ -14009,8 +14010,9 @@ message MediametricsPlaybackReported {
 }
 
 message MediaNetworkInfoChanged {
-    //  Randomly generated playback ID. A Base64 encoded hex string representing a 128-bit integer
-    optional string playback_id = 1;
+    // Randomly generated log session ID. A Base64 encoded hex string representing a
+    // 128-bit integer.
+    optional string log_session_id = 1;
     //  New network type
     optional android.stats.mediametrics.NetworkType type = 2;
     //  Network Start time, relative to playback creation time in millisecond.
@@ -14019,8 +14021,9 @@ message MediaNetworkInfoChanged {
 }
 
 message MediaPlaybackStateChanged {
-    //  Randomly generated playback ID. A Base64 encoded hex string representing a 128-bit integer
-    optional string playback_id = 1;
+    // Randomly generated log session ID. A Base64 encoded hex string representing a
+    // 128-bit integer.
+    optional string log_session_id = 1;
     //  New playback state
     optional android.stats.mediametrics.PlaybackState playback_state = 2;
     //  State change time, relative to playback creation time in millisecond.
@@ -14029,8 +14032,9 @@ message MediaPlaybackStateChanged {
 }
 
 message MediaPlaybackErrorReported {
-    //  Randomly generated playback ID. A Base64 encoded hex string representing a 128-bit integer
-    optional string playback_id = 1;
+    // Randomly generated log session ID. A Base64 encoded hex string representing a
+    // 128-bit integer.
+    optional string log_session_id = 1;
     //  A shortened call stack of the error
     optional string exception_stack = 2;
     //  Error code
@@ -14043,8 +14047,9 @@ message MediaPlaybackErrorReported {
 }
 
 message MediaPlaybackTrackChanged {
-    //  Randomly generated playback ID. A Base64 encoded hex string representing a 128-bit integer
-    optional string playback_id = 1;
+    // Randomly generated log session ID. A Base64 encoded hex string representing a
+    // 128-bit integer.
+    optional string log_session_id = 1;
     //  The track is on or off after the change
     optional android.stats.mediametrics.TrackState state = 2;
     //  The reason of the track change
