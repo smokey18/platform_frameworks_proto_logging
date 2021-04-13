@@ -5747,6 +5747,7 @@ message UIActionLatencyReported {
         ACTION_FACE_WAKE_AND_UNLOCK = 8;
         ACTION_START_RECENTS_ANIMATION = 9;
         ACTION_ROTATE_SCREEN_CAMERA_CHECK = 10;
+        ACTION_ROTATE_SCREEN_SENSOR = 11;
     }
 
     optional ActionType action = 1;
