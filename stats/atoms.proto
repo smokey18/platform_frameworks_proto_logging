@@ -13568,6 +13568,9 @@ message Keystore2StorageStats {
     optional Storage storage_type = 1;
     // Storage size in bytes
     optional int64 size = 2;
+    // Unused space, in bytes. The total storage size may be larger, indicating
+    // inefficiencies in the packing of data in the database.
+    optional int64 unused_size = 3;
 }
 
 /**
@@ -13577,6 +13580,7 @@ message Keystore2StorageStats {
 message RkpErrorReported {
 
     enum RkpErrorEvent {
+        RKP_ERROR_UNSPECIFIED = 0;
         // The key pool is out of keys.
         OUT_OF_KEYS = 1;
         // Falling back to factory provisioned keys during hybrid mode.
