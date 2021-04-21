@@ -566,6 +566,7 @@ message Atom {
         AlarmBatchDelivered alarm_batch_delivered = 367 [(module) = "framework"];
         AlarmScheduled alarm_scheduled = 368 [(module) = "framework"];
         IoOveruseStatsReported io_overuse_stats_reported = 369 [(module) = "carwatchdogd"];
+        UserLevelHibernationStateChanged user_level_hibernation_state_changed = 370 [(module) = "framework"];
 
         // StatsdStats tracks platform atoms with ids upto 500.
         // Update StatsdStats::kMaxPushedAtomId when atom ids here approach that value.
@@ -691,6 +692,7 @@ message Atom {
         RkpPoolStats rkp_pool_stats = 10104;
         ProcessDmabufMemory process_dmabuf_memory = 10105 [(module) = "framework"];
         PendingAlarmInfo pending_alarm_info = 10106 [(module) = "framework"];
+        UserLevelHibernatedApps user_level_hibernated_apps = 10107 [(module) = "framework"];
     }
 
     // DO NOT USE field numbers above 100,000 in AOSP.
@@ -15373,3 +15375,35 @@ message OdrefreshReported {
     // Cache space at end of update.
     optional int32 cache_space_free_end_mib = 9;
 };
+
+/*
+ * Logged when a package's user-level hibernation state changes.
+ * Logged from:
+ *   frameworks/base/services/core/java/com/android/server/apphibernation/AppHibernationService.java
+ */
+ message UserLevelHibernationStateChanged {
+    // Name of the package that had its hibernation state change.
+    optional string package_name = 1;
+
+    // Android user id to which this event belongs. This can only be 0, 10, 11 and so on.
+    optional int32 user_id = 2;
+
+    // New hibernation state. True if hibernating, false otherwise
+    optional bool is_hibernating = 3;
+
+    // Time spent in the other state in millis
+    optional int64 time_in_last_state_millis = 4;
+}
+
+/*
+ * Pull atom for the number of hibernated packages on the device for the given user.
+ * Logged from:
+ *   frameworks/base/services/core/java/com/android/server/apphibernation/AppHibernationService.java
+ */
+message UserLevelHibernatedApps {
+    // Total number of apps hibernated for the user
+    optional int32 hibernated_app_count = 1;
+
+    // Android user id of the queried user which can only be 0, 10, 11 and so on.
+    optional int32 user_id = 2;
+}
