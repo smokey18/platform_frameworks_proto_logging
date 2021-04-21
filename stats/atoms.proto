@@ -10564,6 +10564,9 @@ message RebootEscrowRecoveryReported {
 /**
  * Global display pipeline metrics reported by SurfaceFlinger.
  * Metrics exist beginning in Android 11.
+ * There is a copy of this proto in timestats_atoms.proto in SurfaceFlinger.
+ * That proto must be updated if this atom is updated.
+ *
  * Pulled from:
  *    frameworks/native/services/surfaceflinger/TimeStats/TimeStats.cpp
  */
@@ -10678,6 +10681,9 @@ message SurfaceflingerStatsGlobalInfo {
  * Per-layer display pipeline metrics reported by SurfaceFlinger.
  * Metrics exist beginning in Android 11.
  * The number of layers uploaded may be restricted due to size limitations.
+ * There is a copy of this proto in timestats_atoms.proto in SurfaceFlinger.
+ * That proto must be updated if this atom is updated.
+ *
  * Pulled from:
  *    frameworks/native/services/surfaceflinger/TimeStats/TimeStats.cpp
  */
