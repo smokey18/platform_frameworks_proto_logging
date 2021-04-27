@@ -8837,6 +8837,10 @@ message MediametricsMediaParserReported {
      * The video height in pixels, or -1 if unknown or not applicable.
      */
     optional int32 video_height = 14;
+    /**
+     * Session id for correlating playback metrics.
+     */
+    optional string log_session_id = 15;
 }
 
 /**
