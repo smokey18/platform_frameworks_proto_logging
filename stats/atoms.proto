@@ -155,10 +155,10 @@ message Atom {
         AppStartOccurred app_start_occurred = 48 [(module) = "framework", (module) = "statsdtest"];
         AppStartCanceled app_start_canceled = 49 [(module) = "framework"];
         AppStartFullyDrawn app_start_fully_drawn = 50 [(module) = "framework"];
-        LmkKillOccurred lmk_kill_occurred = 51 [(module) = "lmkd"];
+        LmkKillOccurred lmk_kill_occurred = 51 [(module) = "framework"];
         PictureInPictureStateChanged picture_in_picture_state_changed = 52 [(module) = "framework"];
         WifiMulticastLockStateChanged wifi_multicast_lock_state_changed = 53 [(module) = "wifi"];
-        LmkStateChanged lmk_state_changed = 54 [(module) = "lmkd"];
+        LmkStateChanged lmk_state_changed = 54 [(module) = "framework"];
         AppStartMemoryStateCaptured app_start_memory_state_captured = 55 [(module) = "framework"];
         ShutdownSequenceReported shutdown_sequence_reported = 56 [(module) = "framework"];
         BootSequenceReported boot_sequence_reported = 57;
