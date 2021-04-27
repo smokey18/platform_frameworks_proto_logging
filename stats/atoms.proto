@@ -563,6 +563,8 @@ message Atom {
         TimeoutAutoExtendedReported timeout_auto_extended_reported = 365
             [(module) = "framework"];
         OdrefreshReported odrefresh_reported = 366 [(module) = "art"];
+        AlarmBatchDelivered alarm_batch_delivered = 367 [(module) = "framework"];
+        AlarmScheduled alarm_scheduled = 368 [(module) = "framework"];
 
         // StatsdStats tracks platform atoms with ids upto 500.
         // Update StatsdStats::kMaxPushedAtomId when atom ids here approach that value.
@@ -687,6 +689,7 @@ message Atom {
         Keystore2StorageStats keystore2_storage_stats = 10103;
         RkpPoolStats rkp_pool_stats = 10104;
         ProcessDmabufMemory process_dmabuf_memory = 10105 [(module) = "framework"];
+        PendingAlarmInfo pending_alarm_info = 10106 [(module) = "framework"];
     }
 
     // DO NOT USE field numbers above 100,000 in AOSP.
@@ -15195,6 +15198,62 @@ message FdtrackEventOccurred {
 
     optional FdtrackEventType event = 1;
     optional int32 fd_count = 2;
+}
+
+/**
+ * Pushed when delivering a batch of alarms.
+ *
+ * Logged from:
+ * frameworks/base/apex/jobscheduler/service/java/com/android/server/alarm/MetricsHelper.java
+ */
+message AlarmBatchDelivered {
+    optional int32 num_alarms = 1;
+    optional int32 wakeups = 2;
+}
+
+/**
+ * Pushed when an app schedules an alarm.
+ *
+ * Logged from:
+ * frameworks/base/apex/jobscheduler/service/java/com/android/server/alarm/MetricsHelper.java
+ */
+message AlarmScheduled {
+    optional int32 calling_uid = 1 [(is_uid) = true];
+
+    optional bool is_exact = 2;
+    optional bool is_wakeup = 3;
+    optional bool is_allow_while_idle = 4;
+    optional bool is_alarm_clock = 5;
+    optional bool is_repeating = 6;
+
+    enum ReasonCode {
+        NOT_APPLICABLE = 0;
+        PERMISSION = 1;
+        ALLOW_LIST = 2;
+        CHANGE_DISABLED = 3;
+    }
+    optional ReasonCode exact_alarm_allowed_reason = 7;
+}
+
+/**
+ * Logs statistics about pending alarms.
+ *
+ * Pulled from:
+ * frameworks/base/apex/jobscheduler/service/java/com/android/server/alarm/MetricsHelper.java
+ */
+message PendingAlarmInfo {
+    optional int32 num_total = 1;
+    optional int32 num_exact = 2;
+    optional int32 num_wakeup = 3;
+    optional int32 num_allow_while_idle = 4;
+    optional int32 num_prioritized = 5;
+    optional int32 num_foreground_service = 6;
+    optional int32 num_activity = 7;
+    optional int32 num_service = 8;
+    optional int32 num_listener = 9;
+    optional int32 num_indefinite_future = 10;
+    optional int32 num_repeating = 11;
+    optional int32 num_alarm_clock = 12;
 }
 
 /*
