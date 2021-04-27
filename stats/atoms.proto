@@ -565,6 +565,7 @@ message Atom {
         OdrefreshReported odrefresh_reported = 366 [(module) = "art"];
         AlarmBatchDelivered alarm_batch_delivered = 367 [(module) = "framework"];
         AlarmScheduled alarm_scheduled = 368 [(module) = "framework"];
+        IoOveruseStatsReported io_overuse_stats_reported = 369 [(module) = "carwatchdogd"];
 
         // StatsdStats tracks platform atoms with ids upto 500.
         // Update StatsdStats::kMaxPushedAtomId when atom ids here approach that value.
@@ -13961,7 +13962,7 @@ message TextClassifierApiUsageReported {
  * Logs the current state of an application before it is killed.
  *
  * Pushed from:
- *  packages/services/Car/watchdog/server/src/ApplicationTerminator.cpp
+ *  packages/services/Car/cpp/watchdog/server/src/StatsReporter.cpp
  */
 message KilledAppStatsReported {
     // Linux process uid for the package.
@@ -14007,14 +14008,28 @@ message KilledAppStatsReported {
 }
 
 /**
+ * Logs the I/O overuse stats for an application on detecting I/O overuse.
+ *
+ * Pushed from:
+ *  packages/services/Car/cpp/watchdog/server/src/StatsReporter.cpp
+ */
+message IoOveruseStatsReported {
+    // Linux process uid for the package.
+    optional int32 uid = 1 [(is_uid) = true];
+
+    // The application's I/O overuse stats.
+    optional IoOveruseStats io_overuse_stats = 2 [(log_mode) = MODE_BYTES];
+}
+
+/**
  * Logs I/O overuse stats for a package.
  *
  * Keep in sync between:
- *  packages/services/Car/watchdog/server/src/proto/statsd.proto
+ *  packages/services/Car/cpp/watchdog/server/src/proto/statsd.proto
  *  frameworks/base/cmds/statsd/src/atoms.proto
  *
  * Logged from:
- *  packages/services/Car/watchdog/server/src/ApplicationTerminator.cpp
+ *  packages/services/Car/cpp/watchdog/server/src/StatsReporter.cpp
  */
 message IoOveruseStats {
     enum Period {
@@ -14040,7 +14055,7 @@ message IoOveruseStats {
  *  frameworks/base/cmds/statsd/src/atoms.proto
  *
  * Logged from:
- *  packages/services/Car/watchdog/server/src/ApplicationTerminator.cpp
+ *  packages/services/Car/cpp/watchdog/server/src/StatsReporter.cpp
  */
 message PerStateBytes {
     // Number of bytes attributed to the application foreground.
@@ -14055,11 +14070,13 @@ message PerStateBytes {
 
 /**
  * Logs each ProcessStat in ProcessStats.
+ *
  * Keep in sync between:
  *  packages/services/Car/watchdog/server/src/proto/statsd.proto
  *  frameworks/base/cmds/statsd/src/atoms.proto
+ *
  * Logged from:
- *  packages/services/Car/watchdog/server/src/ApplicationTerminator.cpp
+ *  packages/services/Car/cpp/watchdog/server/src/StatsReporter.cpp
  */
 message ProcessStats {
     // Records the stats of the processes owned by an application.
@@ -14068,11 +14085,13 @@ message ProcessStats {
 
 /**
  * Logs a process's stats.
+ *
  * Keep in sync between:
  *  packages/services/Car/watchdog/server/src/proto/statsd.proto
  *  frameworks/base/cmds/statsd/src/atoms.proto
+ *
  * Logged from:
- *  packages/services/Car/watchdog/server/src/ApplicationTerminator.cpp
+ *  packages/services/Car/cpp/watchdog/server/src/StatsReporter.cpp
  */
 message ProcessStat {
     // Command name of the process.
