@@ -5637,6 +5637,28 @@ message SnapshotMergeReported {
         CANCELLED = 7;
     };
 
+    // Status codes correspond to specific failure conditions in
+    // system/core/fs_mgr/libsnapshot/android/snapshot/snapshot.cpp
+    //
+    // Keep in sync with
+    // system/core/fs_mgr/libsnapshot/android/snapshot/snapshot.proto
+    enum MergeFailureCode {
+        OK = 0;
+        READ_STATUS = 1;
+        GET_TABLE_INFO = 2;
+        UNKNOWN_TABLE = 3;
+        GET_TABLE_PARAMS = 4;
+        ACTIVATE_NEW_TABLE = 5;
+        ACQUIRE_LOCK = 6;
+        LIST_SNAPSHOTS = 7;
+        WRITE_STATUS = 8;
+        UNKNOWN_TARGET_TYPE = 9;
+        QUERY_SNAPSHOT_STATUS = 10;
+        EXPECTED_MERGE_TARGET = 11;
+        UNMERGED_SECTORS_AFTER_COMPLETION = 12;
+        UNEXPECTED_MERGE_STATE = 13;
+    };
+
     // Status of the update after the merge attempts.
     optional UpdateState final_state = 1;
 
@@ -5675,6 +5697,8 @@ message SnapshotMergeReported {
 
     // Time from sys.boot_completed to merge start, in milliseconds.
     optional int32 boot_complete_to_merge_start_time_millis = 11;
+
+    optional MergeFailureCode merge_failure_code = 12;
 }
 
 /**
