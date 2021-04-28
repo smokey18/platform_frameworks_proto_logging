@@ -1358,6 +1358,8 @@ message DeferredJobStatsReported {
  *
  * Logged from:
  *   frameworks/base/services/core/java/com/android/server/am/BatteryStatsService.java
+ *
+ * Next tag: 18
  */
 message ScheduledJobStateChanged {
     repeated AttributionNode attribution_node = 1;
@@ -1372,10 +1374,16 @@ message ScheduledJobStateChanged {
     }
     optional State state = 3;
 
-    // The reason a job has stopped.
+    // The internal reason a job has stopped.
     // This is only applicable when the state is FINISHED.
-    // The default value is STOP_REASON_UNKNOWN.
-    optional android.app.job.StopReasonEnum stop_reason = 4;
+    // The default value is INTERNAL_STOP_REASON_UNKNOWN.
+    optional android.app.job.InternalStopReasonEnum internal_stop_reason = 4;
+
+    // The publicly returned reason onStopJob() was called.
+    // This is only applicable when the state is FINISHED, but may be undefined if
+    // JobService.onStopJob() was never called for the job.
+    // The default value is STOP_REASON_UNDEFINED.
+    optional android.app.job.StopReasonEnum public_stop_reason = 17;
 
     // The standby bucket of the app that scheduled the job. These match the framework constants
     // defined in JobSchedulerService.java with the addition of UNKNOWN using -1, as ACTIVE is
