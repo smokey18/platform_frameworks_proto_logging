@@ -567,6 +567,8 @@ message Atom {
         AlarmScheduled alarm_scheduled = 368 [(module) = "framework"];
         IoOveruseStatsReported io_overuse_stats_reported = 369 [(module) = "carwatchdogd"];
         UserLevelHibernationStateChanged user_level_hibernation_state_changed = 370 [(module) = "framework"];
+        AppSearchInitializeStatsReported app_search_initialize_stats_reported = 371 [(module) = "framework"];
+        AppSearchQueryStatsReported app_search_query_stats_reported = 372 [(module) = "framework"];
 
         // StatsdStats tracks platform atoms with ids upto 500.
         // Update StatsdStats::kMaxPushedAtomId when atom ids here approach that value.
@@ -10553,7 +10555,7 @@ message AppSearchCallStatsReported {
 
     // # of previous skipped sample for this specific type of stats
     // For WestWorld we can't push atoms too closely, so some samples might be skipped
-    // In order to extrapolate the counts, we need to save the number and add it back
+    // In order to extrapolate the counts, we need to save the number of skipped stats and add it back
     // For example, the true count of an event could be estimated as:
     //   SUM(sampling_ratio * (num_skipped_sample + 1)) as est_count
     optional int32 num_skipped_sample = 2;
@@ -10565,10 +10567,12 @@ message AppSearchCallStatsReported {
     optional int32 database = 4;
 
     // The status code for the call or internal state.
-    // Needs to be sync with code in google3/third_party/icing/proto/status.proto
+    // Needs to be sync with AppSearchResult#ResultCode in
+    // frameworks/base/apex/appsearch/framework/java/android/app/appsearch/AppSearchResult.java
     optional int32 status_code = 5;
 
-    // Overall time used for the end-to-end function call in AppSearch
+    // Overall time used for the end-to-end function call in AppSearch.
+    // It doesn't include binder latency
     optional int32 total_latency_millis = 6;
 
     // Type of the function call value is in sync with
@@ -10595,7 +10599,7 @@ message AppSearchPutDocumentStatsReported {
 
     // # of previous skipped sample for this specific type of stats
     // For WestWorld we can't push atoms too closely, so some samples might be skipped
-    // In order to extrapolate the counts, we need to save the number and add it back
+    // In order to extrapolate the counts, we need to save the number of skipped stats and add it back
     // For example, the true count of an event could be estimated as:
     //   SUM(sampling_ratio * (num_skipped_sample + 1)) as est_count
     optional int32 num_skipped_sample = 2;
@@ -10606,7 +10610,8 @@ message AppSearchPutDocumentStatsReported {
     // Hash of the database name within AppSearch
     optional int32 database = 4;
 
-    // Needs to be sync with code in google3/third_party/icing/proto/status.proto
+    // Needs to be sync with AppSearchResult#ResultCode in
+    // frameworks/base/apex/appsearch/framework/java/android/app/appsearch/AppSearchResult.java
     optional int32 status_code = 5;
 
     // Overall time used for a put_document
@@ -10639,6 +10644,164 @@ message AppSearchPutDocumentStatsReported {
 
     // Whether the max number of tokens exceeded.
     optional bool native_exceeded_max_num_tokens = 15;
+}
+
+/**
+ * Logs detailed stats for AppSearch Initialize
+ */
+message AppSearchInitializeStatsReported {
+    // The sampling ratio for this specific type of stats
+    // For example, sampling_ratio=10 means that one out of every 10 stats was logged.
+    optional int32 sampling_ratio = 1;
+
+    // # of previous skipped sample for this specific type of stats
+    // For WestWorld we can't push atoms too closely, so some samples might be skipped
+    // In order to extrapolate the counts, we need to save the number of skipped stats and add it back
+    // For example, the true count of an event could be estimated as:
+    //   SUM(sampling_ratio * (num_skipped_sample + 1)) as est_count
+    optional int32 num_skipped_sample = 2;
+
+    // Package UID of the application.
+    optional int32 uid = 3 [(is_uid) = true];
+
+    // Initialize status code
+    // Needs to be sync with AppSearchResult#ResultCode in
+    // frameworks/base/apex/appsearch/framework/java/android/app/appsearch/AppSearchResult.java
+    optional int32 status_code = 4;
+
+    // Overall time used for initialization, not including binder latency.
+    optional int32 total_latency_millis = 5;
+
+    // Whether the initialize() detects desyncs.
+    // Desync happens if we lose the visibility doc.
+    optional bool has_desync = 6;
+
+    // Time used to read and process the schema and namespaces.
+    optional int32 prepare_schema_and_namespaces_latency_millis = 7;
+
+    // Time used to read and process the visibility file.
+    optional int32 prepare_visibility_file_latency_millis = 8;
+
+    // Overall time used for the native function call.
+    optional int32 native_latency_millis = 9;
+
+    // Needs to be sync with RecoveryCause in google3/third_party/icing/proto/logging.proto
+    optional int32 native_document_store_recovery_cause = 10;
+
+    // Needs to be sync with RecoveryCause in google3/third_party/icing/proto/logging.proto
+    optional int32 native_index_restoration_cause = 11;
+
+    // Needs to be sync with RecoveryCause in google3/third_party/icing/proto/logging.proto
+    optional int32 native_schema_store_recovery_cause = 12;
+
+    // Time used to recover the document store.
+    optional int32 native_document_store_recovery_latency_millis = 13;
+
+    // Time used to restore the index.
+    optional int32 native_index_restoration_latency_millis = 14;
+
+    // Time used to recover the schema store.
+    optional int32 native_schema_store_recovery_latency_millis = 15;
+
+    // Needs to be sync with DocumentStoreDataStatus in google3/third_party/icing/proto/logging.proto
+    optional int32 native_document_store_data_status = 16;
+
+    // Number of documents currently in document store. Those may
+    // include alive, deleted, and expired documents.
+    optional int32 native_num_documents = 17;
+
+    // Number of schema types currently in the schema store.
+    optional int32 native_num_schema_types = 18;
+}
+
+/**
+ * Logs detailed stats for querying in AppSearch
+ */
+message AppSearchQueryStatsReported {
+    // The sampling ratio for this specific type of stats
+    // For example, sampling_ratio=10 means that one out of every 10 stats was logged.
+    optional int32 sampling_ratio = 1;
+
+    // # of previous skipped sample for this specific type of stats
+    // For WestWorld we can't push atoms too closely, so some samples might be skipped
+    // In order to extrapolate the counts, we need to save the number of skipped stats and add it back
+    // For example, the true count of an event could be estimated as:
+    //   SUM(sampling_ratio * (num_skipped_sample + 1)) as est_count
+    optional int32 num_skipped_sample = 2;
+
+    // Package UID of the application.
+    optional int32 uid = 3 [(is_uid) = true];
+
+    // Hash of the database name within AppSearch
+    optional int32 database = 4;
+
+    // Needs to be sync with AppSearchResult#ResultCode in
+    // frameworks/base/apex/appsearch/framework/java/android/app/appsearch/AppSearchResult.java
+    optional int32 status_code = 5;
+
+    // Overall time used for query including estimated binder latency
+    optional int32 total_latency_millis = 6;
+
+    // Time used to rewrite the search spec.
+    optional int32 rewrite_search_spec_latency_millis = 7;
+
+    // Time used to rewrite the search results.
+    optional int32 rewrite_search_result_latency_millis = 8;
+
+    // Whether it is a global query.
+    // Needs to be sync with QueryStats#VisibilityScope in
+    // frameworks/base/apex/appsearch/service/java/com/android/server/appsearch/external/localstorage/stats/QueryStats.java
+    optional int32 visibility_scope = 9;
+
+    // Overall time used for the native function call.
+    optional int32 native_latency_millis = 10;
+
+    // Number of terms in the query string.
+    optional int32 native_num_terms = 11;
+
+    // Length of the query string.
+    optional int32 native_query_length = 12;
+
+    // Number of namespaces filtered.
+    optional int32 native_num_namespaces_filtered = 13;
+
+    // Number of schema types filtered.
+    optional int32 native_num_schema_types_filtered = 14;
+
+    // The requested number of results in one page.
+    optional int32 native_requested_page_size = 15;
+
+    // The actual number of results returned in the current page.
+    optional int32 native_num_results_returned_current_page = 16;
+
+    // Whether the function call is querying the first page. If it's
+    // not, Icing will fetch the results from cache so that some steps
+    // may be skipped.
+    optional bool native_is_first_page = 17;
+
+    // Time used to parse the query, including 2 parts: tokenizing and
+    // transforming tokens into an iterator tree.
+    optional int32 native_parse_query_latency_millis = 18;
+
+    // Strategy of scoring and ranking.
+    // Needs to be sync with RankingStrategy.Code in google3/third_party/icing/proto/scoring.proto
+    optional int32 native_ranking_strategy = 19;
+
+    // Number of documents scored.
+    optional int32 native_num_documents_scored = 20;
+
+    // Time used to score the raw results.
+    optional int32 native_scoring_latency_millis = 21;
+
+    // Time used to rank the scored results.
+    optional int32 native_ranking_latency_millis = 22;
+
+    // Time used to fetch the document protos. Note that it includes the
+    // time to snippet if "native_num_results_with_snippets" is NOT zero.
+    optional int32 native_document_retrieval_latency_millis = 23;
+
+    // How many snippets are calculated.
+    optional int32 native_num_results_with_snippets = 24;
 }
 
 /**
