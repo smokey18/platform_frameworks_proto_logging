@@ -14979,6 +14979,9 @@ message MediametricsAAudioStreamReported {
         CONTENT_TYPE_INVALID = -1;
     }
     optional ContentType content_type = 17;
+
+    // The mode of sharing the device requested by the client.
+    optional SharingMode sharing_requested = 18;
 }
 
 /**
