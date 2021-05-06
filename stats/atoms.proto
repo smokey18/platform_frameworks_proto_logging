@@ -15463,6 +15463,7 @@ message AlarmScheduled {
         CHANGE_DISABLED = 3;
     }
     optional ReasonCode exact_alarm_allowed_reason = 7;
+    optional bool is_rtc = 8;
 }
 
 /**
@@ -15484,6 +15485,7 @@ message PendingAlarmInfo {
     optional int32 num_indefinite_future = 10;
     optional int32 num_repeating = 11;
     optional int32 num_alarm_clock = 12;
+    optional int32 num_rtc = 13;
 }
 
 /*
