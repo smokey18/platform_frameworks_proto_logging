@@ -15293,7 +15293,7 @@ message MediaDrmActivityInfo {
  *     frameworks/base/services/core/java/com/android/server/devicestate/DeviceStateManagerService.java
  */
 message DeviceStateChanged {
-    optional int64 new_device_state = 1
+    optional int32 new_device_state = 1
             [(state_field_option).exclusive_state = true, (state_field_option).nested = false];
     optional bool boot_state = 2;
 }
