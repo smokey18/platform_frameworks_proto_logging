@@ -3063,4 +3063,9 @@ enum PageId {
     // CATEGORY: SETTINGS
     // OS: S
     GAME_SETTINGS = 1886;
+
+    // OPEN: Settings > Security > Warnings (if using alternative security settings).
+    // CATEGORY: SETTINGS
+    // OS: S
+    SECURITY_WARNINGS = 1887;
 }
