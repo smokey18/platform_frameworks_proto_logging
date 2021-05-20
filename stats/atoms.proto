@@ -541,8 +541,8 @@ message Atom {
             345 [(module) = "framework"];
         MagnificationModeWithImeOnReported magnification_mode_with_ime_on_reported =
             346 [(module) = "framework"];
-        AppSearchCallStatsReported app_search_call_stats_reported = 347 [(module) = "framework"];
-        AppSearchPutDocumentStatsReported app_search_put_document_stats_reported = 348 [(module) = "framework"];
+        AppSearchCallStatsReported app_search_call_stats_reported = 347 [(module) = "appsearch"];
+        AppSearchPutDocumentStatsReported app_search_put_document_stats_reported = 348 [(module) = "appsearch"];
         DeviceControlChanged device_control_changed = 349 [(module) = "sysui"];
         DeviceStateChanged device_state_changed = 350 [(module) = "framework"];
         InputDeviceRegistered inputdevice_registered = 351 [(module) = "framework"];
@@ -567,8 +567,8 @@ message Atom {
         AlarmScheduled alarm_scheduled = 368 [(module) = "framework"];
         IoOveruseStatsReported io_overuse_stats_reported = 369 [(module) = "carwatchdogd"];
         UserLevelHibernationStateChanged user_level_hibernation_state_changed = 370 [(module) = "framework"];
-        AppSearchInitializeStatsReported app_search_initialize_stats_reported = 371 [(module) = "framework"];
-        AppSearchQueryStatsReported app_search_query_stats_reported = 372 [(module) = "framework"];
+        AppSearchInitializeStatsReported app_search_initialize_stats_reported = 371 [(module) = "appsearch"];
+        AppSearchQueryStatsReported app_search_query_stats_reported = 372 [(module) = "appsearch"];
         AppProcessDied app_process_died = 373 [(module) = "framework"];
         NetworkIpReachabilityMonitorReported network_ip_reachability_monitor_reported =
             374 [(module) = "network_stack"];
