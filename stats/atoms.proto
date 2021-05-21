@@ -5906,6 +5906,7 @@ message UIInteractionFrameInfoReported {
         LAUNCHER_OPEN_ALL_APPS = 26;
         LAUNCHER_ALL_APPS_SCROLL = 27;
         LAUNCHER_APP_LAUNCH_FROM_WIDGET = 28;
+        SETTINGS_PAGE_SCROLL = 29;
     }
 
     optional InteractionType interaction_type = 1;
