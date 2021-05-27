@@ -11497,7 +11497,7 @@ message PerfettoUploaded {
     // TODO(lalitm): many of the atoms below should be renamed to have a
     // "PERFETTO_CMD" prefix to make clear they are specific to perfetto_cmd.
     // This will be done after the server side is ready for this change.
-    // Next id: 47.
+    // Next id: 48.
     enum Event {
         PERFETTO_UNDEFINED = 0;
 
@@ -11545,6 +11545,7 @@ message PerfettoUploaded {
         PERFETTO_TRACED_ENABLE_TRACING_OOM = 34;
         PERFETTO_TRACED_ENABLE_TRACING_UNKNOWN_ERROR = 35;
         PERFETTO_TRACED_START_TRACING_INVALID_SESSION_STATE = 36;
+        PERFETTO_TRACED_ENABLE_TRACING_INVALID_FILTER = 47;
 
         // Checkpoints inside perfetto_cmd after tracing has finished.
         PERFETTO_ON_TRACING_DISABLED = 4;
