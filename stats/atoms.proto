@@ -3160,8 +3160,9 @@ message InputDeviceRegistered {
     optional int32 version_id = 4;
     // The Input Device Bus ID
     optional int32 bus_id = 5;
-    // The Input Device Unique ID
-    optional string uniq_id = 6;
+    // The Input Device identifier generated from kernel device.
+    // Hash algorithm: HMAC-SHA256
+    optional string obfuscated_id = 6;
     // The Input Device Classes
     optional int32 device_classes = 7;
 }
