@@ -15962,6 +15962,9 @@ message UserLevelHibernatedApps {
 message GlobalHibernatedApps {
     // Total number of apps in global hibernation
     optional int32 hibernated_app_count = 1;
+
+    // Cumulative storage savings from apps being hibernated
+    optional int64 storage_saved_mb = 2;
 }
 
 /*
