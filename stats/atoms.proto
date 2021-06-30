@@ -3537,6 +3537,9 @@ message LauncherUIChanged {
 
     // e.g., number of contents inside a container (e.g., icons inside a folder)
     optional int32 cardinality = 24;
+
+    // Used to store features of the target (e.g. widget is reconfigurable, etc)
+    optional int32 features = 25;
 }
 
 message SmartSpaceCardReported {
@@ -3631,6 +3634,9 @@ message LauncherStaticLayout {
     // e.g., (x, y) span of the widget inside homescreen grid system
     optional int32 span_x = 17 [default = 1];
     optional int32 span_y = 18 [default = 1];
+
+    // Used to store features of the target (e.g. widget is reconfigurable, etc)
+    optional int32 features = 19;
 }
 
 /**
