@@ -14493,22 +14493,39 @@ message RkpErrorStats {
 }
 
 /**
- * Logs: Count of keys in the key pool related to
+ * Logs: Status of the attestation key pool related to
  * Remote Key Provisioning (RKP).
  * Logged from: system/security/keystore2
  */
 message RkpPoolStats {
-    enum PoolStatus {
-        EXPIRING = 1;
-        UNASSIGNED = 2;
-        ATTESTED = 3;
-        TOTAL = 4;
-    }
-    // State of the attestation key pool, for which the count of keys is reported.
-    optional PoolStatus pool_status = 1;
+    /**
+     * Security level of the Keymint instance associated with the
+     * attestation pool status.
+     */
+    optional android.system.security.keystore2.SecurityLevelEnum security_level = 1;
 
-    // Count of keys in the particular status
-    optional int32 count_of_keys = 2;
+    /**
+     * The number of signed attestation certificate chains which are
+     * expired.
+     */
+    optional int32 expiring = 2;
+
+    /**
+     * The number of signed attestation certificate chains which have
+     * not yet been assigned to an app.
+     */
+    optional int32 unassigned = 3;
+
+    /**
+     * The number of signed attestation keys.
+     */
+    optional int32 attested = 4;
+
+    /**
+     * The total number of attestation keys.
+     */
+    optional int32 total = 5;
+
 }
 
 /**
