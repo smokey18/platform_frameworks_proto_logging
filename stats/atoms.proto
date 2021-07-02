@@ -508,11 +508,11 @@ message Atom {
         TlsHandshakeReported tls_handshake_reported = 317 [(module) = "conscrypt"];
         TextClassifierApiUsageReported text_classifier_api_usage_reported = 318  [(module) = "textclassifier"];
         KilledAppStatsReported killed_app_stats_reported = 319 [(module) = "carwatchdogd"];
-        MediametricsPlaybackReported mediametrics_playback_reported = 320;
-        MediaNetworkInfoChanged media_network_info_changed = 321;
-        MediaPlaybackStateChanged media_playback_state_changed = 322;
-        MediaPlaybackErrorReported media_playback_error_reported = 323;
-        MediaPlaybackTrackChanged media_playback_track_changed = 324;
+        MediametricsPlaybackReported mediametrics_playback_reported = 320 [(module) = "media_metrics"];
+        MediaNetworkInfoChanged media_network_info_changed = 321 [(module) = "media_metrics"];
+        MediaPlaybackStateChanged media_playback_state_changed = 322 [(module) = "media_metrics"];
+        MediaPlaybackErrorReported media_playback_error_reported = 323 [(module) = "media_metrics"];
+        MediaPlaybackTrackChanged media_playback_track_changed = 324 [(module) = "media_metrics"];
         WifiScanReported wifi_scan_reported = 325 [(module) = "wifi"];
         WifiPnoScanReported wifi_pno_scan_reported = 326  [(module) = "wifi"];
         TifTuneStateChanged tif_tune_changed = 327 [(module) = "framework"];
