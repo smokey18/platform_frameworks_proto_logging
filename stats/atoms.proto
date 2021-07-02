@@ -15731,6 +15731,9 @@ message UnattendedRebootOccurred {
 
     // Number of times the reboot was blocked by background app activity.
     optional int32 times_blocked_by_app_activity = 5;
+
+    // Time until next user interaction with the device.
+    optional int64 time_until_next_interaction_ms = 6;
 }
 
 
