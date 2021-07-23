@@ -4218,8 +4218,8 @@ message AppStartOccurred {
     // Whether the app is an instant app.
     optional bool is_instant_app = 6;
 
-    // Device uptime when activity started.
-    optional int64 activity_start_millis = 7;
+    // Device uptime when activity started. Deprecated: use activity_start_timestamp_millis instead.
+    optional int64 activity_start_millis = 7 [deprecated = true];
 
     optional android.app.AppTransitionReasonEnum reason = 8;
 
@@ -4264,6 +4264,9 @@ message AppStartOccurred {
 
     // The hash value of the activity name.
     optional int32 activity_name_hash = 21;
+
+    // The timestamp(SystemClock#elapsedRealtime()) when starting activity.
+    optional int64 activity_start_timestamp_millis = 22;
 }
 
 message AppStartCanceled {
