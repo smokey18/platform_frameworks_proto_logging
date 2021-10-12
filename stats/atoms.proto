@@ -15239,6 +15239,9 @@ message CarWatchdogIoOveruseStats {
 
     // Number of write bytes in each state for the specified period.
     optional CarWatchdogPerStateBytes written_bytes = 3;
+
+    // Application or service uptime during the aforementioned period.
+    optional uint64 uptime_millis = 4;
 };
 
 /**
