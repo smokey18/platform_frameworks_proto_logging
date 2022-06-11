@@ -3225,6 +3225,10 @@ enum PageId {
     // CATEGORY: SETTINGS
     // OS: S
     SETTINGS_BUTTON_NAV_DLG = 1907;
+
+    // OPEN: Settings > Display > Network Traffic
+    // CATEGORY: SETTINGS
+    NETWORK_TRAFFIC = 3002;
 }
 
 // Battery Saver schedule types.
